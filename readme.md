@@ -68,13 +68,13 @@ npm install
 npm run dev
 ```
 
-The dashboard will usually be available at `http://localhost:5173`, while the FastAPI backend runs at `http://localhost:8000`.[13]
+The dashboard will usually be available at `http://localhost:5173`, while the FastAPI backend runs at `http://localhost:8000`.
 
 ## Demo flow
 
 ### Synthetic demo mode
 
-Use the **Generate Demo Traffic** button to create simulated attacker events. This mode is useful for reliable demos because the dashboard updates from real backend data while the incident source remains controlled and repeatable.[7][14]
+Use the **Generate Demo Traffic** button to create simulated attacker events. This mode is useful for reliable demos because the dashboard updates from real backend data while the incident source remains controlled and repeatable.
 
 ### Live decoy mode
 
@@ -96,30 +96,47 @@ The current build can use a lightweight local IP-to-country helper for demo enri
 
 ## What the dashboard shows
 
-- **Total Events**: all captured honeypot interactions.[3]
-- **Live Events**: incidents generated from real decoy-route access.[6]
-- **Demo Events**: incidents produced by the simulator for presentations.[7]
-- **Critical Alerts**: highest-risk detections based on anomaly score and context.[1]
-- **Threat Timeline**: progression of incident risk over time.[18]
-- **Top Source IPs**: most active origins by hit count.[9]
-- **Hot Decoys**: which bait assets are attracting the most attention.[3]
-- **Audit Chain Blocks**: proof that captured events are hash-linked and verifiable.[2]
+- **Total Events**: all captured honeypot interactions.
+- **Live Events**: incidents generated from real decoy-route access.
+- **Demo Events**: incidents produced by the simulator for presentations.
+- **Critical Alerts**: highest-risk detections based on anomaly score and context.
+- **Threat Timeline**: progression of incident risk over time.
+- **Top Source IPs**: most active origins by hit count.
+- **Hot Decoys**: which bait assets are attracting the most attention.
+- **Audit Chain Blocks**: proof that captured events are hash-linked and verifiable.
 
 Explanation of each tech used : 
 -**FastAPI**: Python web framework used to build fast backend APIs and decoy routes.
+
 -**React**: Frontend library used to build the live dashboard interface.
+
 -**SQLite**: Lightweight database used to store incidents, campaigns, and audit history.
+
 -**scikit-learn**: Machine learning library used for anomaly detection with Isolation Forest.
+
 -**Isolation Forest**: ML algorithm used to score unusual attacker behavior.
+
 -**Prometheus client**: Exposes backend metrics so system activity can be monitored.
+
 -**GeoIP2 / MaxMind**: Used to map attacker IPs to country, city, ASN, and coordinates.
+
 -**NVD API**: Pulls real vulnerability data so detected services can be tied to known CVEs.
+
 -**Discord / Slack webhooks**: Send instant alerts when high-risk activity is detected.
+
 -**Chart.js**: Renders dashboard charts for risk, source activity, and traffic split.
+
 -**CORS**: Allows the frontend to talk to the backend safely during development.
+
 -**UUIDs**: Create unique session identifiers for grouping attacker activity.
+
 -**Hashing / SHA-256**: Used to build a tamper-evident audit chain.
+
 -**Webhooks**: Let the system push alerts to external chat tools automatically.
+
 -**REST API**: The backend design style used for clean route-based communication.
+
 -**CSS Grid / Flexbox**: Used to create the responsive dashboard layout.
+
 -**JavaScript / JSX**: Powers the interactive React UI components.
+
