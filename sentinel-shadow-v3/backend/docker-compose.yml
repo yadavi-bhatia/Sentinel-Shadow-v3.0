@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  sentinel-backend:
+    build: .
+    container_name: sentinel-shadow-v2-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_PATH=/data/sentinel_shadow_v2.db
+    volumes:
+      - sentinel_v2_data:/data
+volumes:
+  sentinel_v2_data:

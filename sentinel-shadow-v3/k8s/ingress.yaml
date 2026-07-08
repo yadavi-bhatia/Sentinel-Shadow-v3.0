@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sentinel-shadow-v2-ingress
+spec:
+  rules:
+    - host: sentinel-shadow-v2.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sentinel-shadow-v2
+                port:
+                  number: 80

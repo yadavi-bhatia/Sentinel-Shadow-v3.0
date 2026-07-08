@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sentinel-shadow-v2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sentinel-shadow-v2
+  template:
+    metadata:
+      labels:
+        app: sentinel-shadow-v2
+    spec:
+      containers:
+        - name: backend
+          image: your-dockerhub-user/sentinel-shadow-v2:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_PATH
+              value: /data/sentinel_shadow_v2.db
+          volumeMounts:
+            - mountPath: /data
+              name: sentinel-shadow-storage
+      volumes:
+        - name: sentinel-shadow-storage
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentinel-shadow-v2
+spec:
+  selector:
+    app: sentinel-shadow-v2
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP
