@@ -105,7 +105,8 @@ The current build can use a lightweight local IP-to-country helper for demo enri
 - **Hot Decoys**: which bait assets are attracting the most attention.
 - **Audit Chain Blocks**: proof that captured events are hash-linked and verifiable.
 
-Explanation of each tech used : 
+## **Explanation of each tech used : **
+
 -**FastAPI**: Python web framework used to build fast backend APIs and decoy routes.
 
 -**React**: Frontend library used to build the live dashboard interface.
