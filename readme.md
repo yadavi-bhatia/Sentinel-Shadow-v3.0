@@ -93,41 +93,6 @@ FastAPI can access request headers and client host information directly from the
 
 The current build can use a lightweight local IP-to-country helper for demo enrichment, or a real GeoLite2/GeoIP pipeline if deployed publicly. Real honeypot dashboards often enrich source IPs with country, ASN, or map views to improve investigation context.
 
-### Simple local helper
-
-Add this helper and import `enrich_geo()` into the backend if needed:
-
-```python
-import ipaddress
-
-def enrich_geo(ip: str) -> str:
-    try:
-        addr = ipaddress.ip_address(ip)
-        if addr.is_loopback:
-            return "Localhost"
-        if addr.is_private:
-            return "Private Network"
-    except ValueError:
-        return "Unknown"
-
-    if ip.startswith("203."):
-        return "Singapore"
-    if ip.startswith("198."):
-        return "Germany"
-    if ip.startswith("45."):
-        return "Netherlands"
-    if ip.startswith("91."):
-        return "United States"
-    if ip.startswith("185."):
-        return "Russia"
-    if ip.startswith("103."):
-        return "India"
-    return "Unknown"
-```
-
-### Production-grade GeoIP path
-
-For a stronger build, replace the prefix-based helper with a proper GeoIP database lookup and optionally add ASN enrichment and a map view. Public honeypot dashboards frequently visualize location trends and source concentration across countries or regions.[9][10][17]
 
 ## What the dashboard shows
 
@@ -140,29 +105,21 @@ For a stronger build, replace the prefix-based helper with a proper GeoIP databa
 - **Hot Decoys**: which bait assets are attracting the most attention.[3]
 - **Audit Chain Blocks**: proof that captured events are hash-linked and verifiable.[2]
 
-## Recommended next upgrades
-
-1. Add real GeoIP lookup with ASN and city enrichment for public deployments.[9][10]
-2. Replace seeded CVE data with a scheduled NVD sync job for real vulnerability context.[19]
-3. Add a world map or country heat list to visualize source concentration.[10][17]
-4. Add alert webhooks for Slack, Discord, or email to demonstrate response automation.[20][19]
-5. Add session replay or grouped attacker campaign view to strengthen investigation storytelling.[2]
-
-## Judge-ready pitch
-
-Sentinel Shadow v3.0 is a deception-driven cyber defense platform that plants realistic decoys, captures attacker interaction in real time, scores it with anomaly ML, preserves it in a tamper-evident audit chain, and exposes the full picture through a live dashboard. This turns a honeypot from a passive trap into an analyst-facing detection and investigation product.[1][19][3]
-
-## Troubleshooting
-
-### Port already in use
-
-If Uvicorn reports `Address already in use`, a different process is already bound to the port. On macOS, `lsof` and `kill` are common ways to find and release that process.[21][22]
-
-```bash
-lsof -i :8000
-kill -9 $(lsof -ti:8000) 2>/dev/null
-```
-
-### Backend path issue
-
-If `cd backend` or `cd frontend` fails, confirm the actual nested project directory with `pwd` and `ls` first. A mismatch between the shell location and the VS Code explorer path is a common cause of this problem in nested project folders.
+Explanation of each tech used : 
+-**FastAPI**: Python web framework used to build fast backend APIs and decoy routes.
+-**React**: Frontend library used to build the live dashboard interface.
+-**SQLite**: Lightweight database used to store incidents, campaigns, and audit history.
+-**scikit-learn**: Machine learning library used for anomaly detection with Isolation Forest.
+-**Isolation Forest**: ML algorithm used to score unusual attacker behavior.
+-**Prometheus client**: Exposes backend metrics so system activity can be monitored.
+-**GeoIP2 / MaxMind**: Used to map attacker IPs to country, city, ASN, and coordinates.
+-**NVD API**: Pulls real vulnerability data so detected services can be tied to known CVEs.
+-**Discord / Slack webhooks**: Send instant alerts when high-risk activity is detected.
+-**Chart.js**: Renders dashboard charts for risk, source activity, and traffic split.
+-**CORS**: Allows the frontend to talk to the backend safely during development.
+-**UUIDs**: Create unique session identifiers for grouping attacker activity.
+-**Hashing / SHA-256**: Used to build a tamper-evident audit chain.
+-**Webhooks**: Let the system push alerts to external chat tools automatically.
+-**REST API**: The backend design style used for clean route-based communication.
+-**CSS Grid / Flexbox**: Used to create the responsive dashboard layout.
+-**JavaScript / JSX**: Powers the interactive React UI components.
